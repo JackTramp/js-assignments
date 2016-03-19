@@ -69,7 +69,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {    
-    return value.slice(7, value.length-1);    
+    return value.slice(7, -1);    
 }
 
 
@@ -278,7 +278,7 @@ function isString(value) {
 function getCardId(value) {
     const suit = "♣♦♥♠";
     const card = "A234567891JQK";
-    return suit.indexOf(value.charAt(value.length-1)) * 13 + card.indexOf(value.charAt(0));    
+    return suit.indexOf(value.slice(-1)) * 13 + card.indexOf(value[0]);    
 }
 
 
