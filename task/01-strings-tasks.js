@@ -224,13 +224,19 @@ function getRectangleString(width, height) {
  *   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(str) {    
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    const shift = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
-    var encryptString = "";    
-    for (let i = 0; i < str.length; i++)        
-        encryptString += (alphabet.indexOf(str[i]) !== -1) ? shift[alphabet.indexOf(str[i])] : str[i];  
-    return encryptString; 
+function encodeToRot13(str) {
+    var maxCodeUpper = 90;
+    var maxCodeLower = 122;
+    //var middleCodeUpper = 78;
+    //var middleCodeLower = 110;    
+    return str.replace(/[A-Za-z]/g, function(ch) {
+        let code = ch.charCodeAt(0) + 13;
+        code = (ch <= "Z" ? maxCodeUpper : maxCodeLower) >= code ? code : code - 26;
+        return String.fromCharCode(code);
+        // if(code > maxCodeUpper) code = (code >= middleCodeLower) ? code - 13 : code + 13;
+        // else code = (code >= middleCodeUpper) ? code - 13 : code + 13;
+        // return String.fromCharCode(code);
+    });
 }
 
 /**
@@ -247,7 +253,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) { 
-    return (typeof value === "string"|| value instanceof String) ? true : false;         
+    return (typeof value === "string" || value instanceof String);         
 }
 
 
