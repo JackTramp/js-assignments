@@ -57,10 +57,9 @@ function parseDataFromIso8601(value) {
  */
 function isLeapYear(date) {    
     let year = date.getFullYear();
-    if(year % 4 !== 0) return false;
-    else if (year % 100 !== 0) return true;
-    else if (year % 400 !== 0) return false;
-    else return true;   
+    return (year % 4 === 0)
+        && (year % 100 !== 0)
+        || (year % 400 === 0);        
 }
 
 
@@ -100,10 +99,10 @@ function timeSpanToString(startDate, endDate) {
  */
 function angleBetweenClockHands(date) {
     let hours = date.getUTCHours();
-    hours = hours > 12 ? hours - 12 : hours;
+    if(hours > 12) hours = hours - 12;    
     let minutes = date.getUTCMinutes();
     let angle = Math.abs(0.5 * (60 * hours - 11 * minutes));   
-    angle = angle > 180 ?  360 - angle : angle;    
+    if(angle > 180) angle = 360 - angle;        
     return angle * (Math.PI / 180);   
 }
  
