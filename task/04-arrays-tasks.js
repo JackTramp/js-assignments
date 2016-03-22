@@ -287,7 +287,7 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
 function get3TopItems(arr) {
-   throw new Error('Not implemented');
+    return arr.sort((a, b) => b - a).slice(0, 3);   
 }
  
  
@@ -321,7 +321,8 @@ function getPositivesCount(arr) {
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
 function sortDigitNamesByNumericOrder(arr) {
-   throw new Error('Not implemented');
+    const digitName = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    return arr.sort((a, b) => digitName.indexOf(a) - digitName.indexOf(b));   
 }
 
 /** 
