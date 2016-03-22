@@ -38,7 +38,7 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {  
-    return Array.from(new Array(len), (arr, k) => 2 * k + 1); // or {length: len}
+    return Array.from(new Array(len), (v, k) => 2 * k + 1); // or {length: len}
 }
 
 
@@ -416,7 +416,11 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  */
 function sortCitiesArray(arr) {
-   throw new Error('Not implemented');
+    return arr.sort((a, b) => { 
+        if(a.country !== b.country)
+            return (a.country > b.country) ? 1 : -1;  
+        else return (a.city > b.city) ? 1 : -1;                         
+    });  
 }
 
 /**
@@ -455,7 +459,8 @@ function getIdentityMatrix(n) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(start, end) {
-   throw new Error('Not implemented');
+    let len = end - start + 1;
+    return Array.from(new Array(len), () => start++);  // or {length: len}
 }
 
 /**
