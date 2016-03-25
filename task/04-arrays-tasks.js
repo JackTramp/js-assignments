@@ -510,7 +510,7 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(array, keySelector, valueSelector) {
+function group(array, keySelector, valueSelector) {    
    throw new Error('Not implemented');
 }
 
@@ -568,7 +568,8 @@ function getElementByIndexes(arr, indexes) {
  * 
  */
 function swapHeadAndTail(arr) {
-    throw new Error('Not implemented');
+    let len = Math.round(arr.length / 2);
+    return arr.map((v, i) => ((len > i) ? arr[len + i] : arr[i - len]) || arr[i]);        
 }
 
 
