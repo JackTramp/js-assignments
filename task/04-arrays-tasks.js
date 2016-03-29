@@ -38,7 +38,7 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {  
-    return Array.from(new Array(len), (v, k) => 2 * k + 1); // or {length: len}
+    return Array.from({length: len}, (v, k) => 2 * k + 1);
 }
 
 
@@ -462,7 +462,7 @@ function getIdentityMatrix(n) {
  */
 function getIntervalArray(start, end) {
     let len = end - start + 1;
-    return Array.from(new Array(len), () => start++);  // or {length: len}
+    return Array.from({length: len}, () => start++);
 }
 
 /**
