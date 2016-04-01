@@ -342,7 +342,19 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    const openBracket = ['[','(','{','<'];
+    const closeBracket = [']',')','}','>'];
+    let count = 0;
+    for(let i = 0; i < str.length; i++) {
+        let ch = str[i];
+        if(openBracket.indexOf(ch) > -1) count++;
+        else if(closeBracket.indexOf(ch) > -1) {
+            count--;
+            if(count < 0) return false;            
+        }       
+    }
+    return count === 0;      
+    //throw new Error('Not implemented');
 }
 
 
@@ -402,7 +414,13 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    let arr = [];    
+    while(num > 0) {                  // === or return num.toString(n);
+        let remainder = num % n;
+        arr.unshift(remainder);
+        num = parseInt(num / n);               
+    }
+    return arr.join('');   
 }
 
 
