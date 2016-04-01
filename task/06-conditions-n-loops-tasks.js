@@ -342,19 +342,19 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    const openBracket = ['[','(','{','<'];
-    const closeBracket = [']',')','}','>'];
-    let count = 0;
-    for(let i = 0; i < str.length; i++) {
-        let ch = str[i];
-        if(openBracket.indexOf(ch) > -1) count++;
-        else if(closeBracket.indexOf(ch) > -1) {
-            count--;
-            if(count < 0) return false;            
-        }       
-    }
-    return count === 0;      
-    //throw new Error('Not implemented');
+    // const openBracket = ['[','(','{','<'];
+    // const closeBracket = [']',')','}','>'];
+    // let count = 0;
+    // for(let i = 0; i < str.length; i++) {
+    //     let ch = str[i];
+    //     if(openBracket.indexOf(ch) > -1) count++;
+    //     else if(closeBracket.indexOf(ch) > -1) {
+    //         count--;
+    //         if(count < 0) return false;            
+    //     }       
+    // }
+    // return count === 0;      
+    throw new Error('Not implemented');
 }
 
 
@@ -390,7 +390,27 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    const timespan = new Date(endDate - startDate) / 1000; // sec
+    const min = 60;
+    const hour = 60 * min;
+    const day = 24 * hour;
+    const month = 30 * day;
+    const year = 12 * month;
+    let str = '';
+    switch (true) {
+        case (timespan <= 45) : str = 'a few seconds ago'; break;
+        case (timespan <= 90) : str = 'a minute ago'; break;
+        case (timespan <= 45 * min) : str = `${Math.round((timespan - 0.001) / min)} minutes ago`; break;
+        case (timespan <= 90 * min) : str = 'an hour ago'; break;
+        case (timespan <= 22 * hour) : str = `${Math.round((timespan - 0.001) / hour)} hours ago`; break;
+        case (timespan <= 36 * hour) : str = 'a day ago'; break;
+        case (timespan <= 25 * day) : str = `${Math.round((timespan - 0.001) / day)} days ago`; break;
+        case (timespan <= 45 * day) : str = 'a month ago'; break;
+        case (timespan <= 345 * day) : str = `${Math.round((timespan - 0.001) / month)} months ago`; break;
+        case (timespan <= 545 * day) : str = 'a year ago'; break;
+        default : str = `${Math.round((timespan -0.001) / year)} years ago`;
+    } 
+    return str;
 }
 
 
