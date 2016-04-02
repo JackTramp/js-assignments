@@ -525,7 +525,28 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+    const crossWin = 'XXX';
+    const toeWin = '000';
+    for(let i = 0; i < 3; i++) {
+        let row = '';
+        for(let j = 0; j < 3; j++) {
+            row += position[i][j];
+        }
+        if(row === crossWin || row === toeWin) return row[0];           
+    } 
+    
+    for(let i = 0; i < 3; i++) {
+        let column = '';
+        for(let j = 0; j < 3; j++) {
+            column += position[j][i];
+        }
+        if(column === crossWin || column === toeWin) return column[0];           
+    }   
+     
+    let mainDiag = position[0][0] + position[1][1] + position[2][2];
+    let secondDiag = position[0][2] + position[1][1] + position[2][0];   
+    if(mainDiag === crossWin || mainDiag === toeWin) return mainDiag[0];
+    if(secondDiag === crossWin || secondDiag === toeWin) return secondDiag[0];    
 }
 
 
