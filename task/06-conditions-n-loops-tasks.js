@@ -342,19 +342,17 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    // const openBracket = ['[','(','{','<'];
-    // const closeBracket = [']',')','}','>'];
-    // let count = 0;
-    // for(let i = 0; i < str.length; i++) {
-    //     let ch = str[i];
-    //     if(openBracket.indexOf(ch) > -1) count++;
-    //     else if(closeBracket.indexOf(ch) > -1) {
-    //         count--;
-    //         if(count < 0) return false;            
-    //     }       
-    // }
-    // return count === 0;      
-    throw new Error('Not implemented');
+    const openBracket = ['[','(','{','<'];
+    const closeBracket = [']',')','}','>'];
+    let stack = [];
+    for(let i = 0; i < str.length; i++) {
+        let bracket = str[i];
+        if(openBracket.indexOf(bracket) !== -1) stack.push(bracket);
+        else if(closeBracket.indexOf(bracket) !== -1) {            
+            if(closeBracket.indexOf(bracket) !== openBracket.indexOf(stack.pop())) return false;                                   
+        }       
+    }
+    return stack.length === 0;  
 }
 
 
@@ -480,6 +478,18 @@ function getCommonDirectoryPath(pathes) {
  *
  */
 function getMatrixProduct(m1, m2) {
+    // let multMatrix = [];
+    // for(let i = 0; i < m2.length; i++) { 
+    //     multMatrix[i] = [];
+    //     for(let j = 0; j < m1[0].length; j++) {
+    //         let sum = 0;
+    //         for(let k = 0; k < m1.length; k++) {
+    //             sum += m1[k][j] * m2[i][k];
+    //         }
+    //         multMatrix[i].push(sum);
+    //     }
+    // }
+    // return multMatrix;
     throw new Error('Not implemented');
 }
 
