@@ -55,7 +55,14 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    throw new Error('Not implemented');
+    var f0 = 0;
+    var f1 = 1;
+    while(true) {
+        let current = f0;
+        f0 = f1;
+        f1 += current;        
+        yield current;
+    }    
 }
 
 
@@ -90,7 +97,17 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
-    throw new Error('Not implemented');
+    var stack = [];
+    stack.push(root);
+    while(stack.length) {
+        root = stack.pop();       
+        if(root.children) {
+            let childList = root.children;    
+            for(let i = childList.length - 1; i >= 0; i--) 
+                stack.push(childList[i]);                 
+        }            
+        yield root;      
+    }    
 }
 
 
@@ -116,7 +133,17 @@ function* depthTraversalTree(root) {
  *
  */
 function* breadthTraversalTree(root) {
-    throw new Error('Not implemented');
+    var queue = [];
+    queue.push(root);
+    while(queue.length) {
+        root = queue.shift();
+        if(root.children) {
+            let childList = root.children;
+            for(let i = 0; i < childList.length; i++)
+                queue.push(childList[i]);
+        }
+        yield root;
+    }    
 }
 
 
@@ -133,7 +160,15 @@ function* breadthTraversalTree(root) {
  *   [ 0 ], [ 2, 4, 6, ... ]  => [ 0, 2, 4, 6, ... ]
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
-function* mergeSortedSequences(source1, source2) {
+function* mergeSortedSequences(source1, source2) {    
+    // var genSeq1 = source1();
+    // var genSeq2 = source2();
+    // while(true) {
+    //     let a = genSeq1.next().value;
+    //     let b = genSeq2.next().value;
+    //     if(a < b) yield a;
+    //     yield* b;
+    // }
     throw new Error('Not implemented');
 }
 
