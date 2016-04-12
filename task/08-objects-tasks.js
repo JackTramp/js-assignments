@@ -107,38 +107,106 @@ function fromJSON(proto, json) {
  *
  *  For more examples see unit tests.
  */
+function MySelector() {
+    this.selector = [];
+    this.doubleMatch = 'Element, id and pseudo-element should not occur more' +
+                       ' then one time inside the selector';
+                           
+    this.wrongOrder = 'Selector parts should be arranged in the following order:' + 
+                      ' element, id, class, attribute, pseudo-class, pseudo-element';    
+}
 
-const cssSelectorBuilder = {
+MySelector.prototype = {
+   
+    element: function (value) {
+        if( this.checkOrder(/[#.\[\]:]+/) )
+            throw new Error(this.wrongOrder);
+        if(this.selector.some(val => val.match(/^\w/))) 
+            throw new Error(this.doubleMatch); 
+        this.selector.push(value);
+        return this;
+    },
 
-    element: function(value) {
-        throw new Error('Not implemented');
+    id: function (value) {
+        if( this.selector.some(val => val.includes('#')) ) 
+            throw new Error(this.doubleMatch); 
+        if( this.checkOrder(/[.\[\]:]+/) )
+            throw new Error(this.wrongOrder);
+        this.selector.push(`#${value}`);
+        return this;
+    },
+
+    class: function (value) {
+        this.selector.push(`.${value}`);
+        if( this.checkOrder(/[\[\]:]+/) )
+            throw new Error(this.wrongOrder);
+        return this;
+    },
+
+    attr: function (value) {
+        this.selector.push(`[${value}]`);
+        if( this.checkOrder(/:+/) )
+            throw new Error(this.wrongOrder);
+        return this;
+    },
+
+    pseudoClass: function (value) {
+        this.selector.push(`:${value}`);
+        if( this.checkOrder(/::/) )
+            throw new Error(this.wrongOrder);
+        return this;
+    },
+
+    pseudoElement: function (value) {
+        if( this.selector.some(val => val.includes('::')) ) 
+            throw new Error(this.doubleMatch);
+        this.selector.push(`::${value}`);
+        return this;
+    },
+
+    stringify: function () {  return this.selector.join(''); },
+    
+    combine: function (combinator, selector2) {        
+        this.selector.push(` ${combinator} `);        
+        this.selector = this.selector.concat(selector2.selector);
+        return this;
+    },
+    
+    checkOrder: function (regex) {
+        return this.selector.some(val => val.match(regex))
+    }
+};
+
+const cssSelectorBuilder = {  
+    
+    element: function(value) {        
+        return new MySelector().element(value);        
     },
 
     id: function(value) {
-        throw new Error('Not implemented');
+        return new MySelector().id(value);       
     },
 
     class: function(value) {
-        throw new Error('Not implemented');
+        return new MySelector().class(value);        
     },
 
     attr: function(value) {
-        throw new Error('Not implemented');
+        return new MySelector().attr(value);        
     },
 
     pseudoClass: function(value) {
-        throw new Error('Not implemented');
+        return new MySelector().pseudoClass(value);        
     },
 
     pseudoElement: function(value) {
-        throw new Error('Not implemented');
+        return new MySelector().pseudoElement(value);        
     },
 
-    combine: function(selector1, combinator, selector2) {
-        throw new Error('Not implemented');
-    },
+    combine: function(selector1, combinator, selector2) {        
+        return selector1.combine(combinator, selector2);        
+    }  
 };
-
 
 module.exports = {
     Rectangle: Rectangle,
