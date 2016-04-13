@@ -144,8 +144,14 @@ function retry(func, attempts) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(func, logFunc) {
-    throw new Error('Not implemented');
+function logger(func, logFunc) {       
+    return function() { 
+        const args = JSON.stringify(Array.prototype.slice.call(arguments)).slice(1, -1);                      
+        logFunc(`${func.name}(${args}) starts`);
+        const result = func.apply(this, arguments);
+        logFunc(`${func.name}(${args}) ends`);
+        return result;
+    };    
 }
 
 
@@ -184,8 +190,7 @@ function partialUsingArguments(fn) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-    return () => startFrom++;
-    //throw new Error('Not implemented');
+    return () => startFrom++;    
 }
 
 
