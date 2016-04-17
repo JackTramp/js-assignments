@@ -16,9 +16,54 @@
  *     { abbreviation : 'NbW',   azimuth : 348.75 }
  *  ]
  */
-function createCompassPoints() {
-    throw new Error('Not implemented');
-    var sides = ['N','E','S','W'];  // use array of cardinal directions only!
+
+function* getAbbreviation() {      // to make with other solution
+    var sides = ['N','E','S','W']; // use array of cardinal directions only!
+    var lastSide = sides[3];
+    for(let i = 0; i < 3; i++) {
+        yield sides[i];
+        yield `${sides[i]}b${sides[i + 1]}`;        
+        yield (i % 2 === 0) ? sides[i].repeat(2) + sides[i + 1] : sides[i] + sides[i + 1] + sides[i];
+        yield (i % 2 === 0) ? `${sides[i]}${sides[i + 1]}b${sides[i]}` : `${sides[i+1]}${sides[i]}b${sides[i]}`;
+        yield (i % 2 === 0) ? sides[i] + sides[i + 1] : sides[i + 1] + sides[i];
+        yield (i % 2 === 0) ? `${sides[i]}${sides[i + 1]}b${sides[i + 1]}` : `${sides[i + 1]}${sides[i]}b${sides[i + 1]}`;
+        yield (i % 2 === 0) ? sides[i + 1] + sides[i] + sides[i + 1] : sides[i + 1].repeat(2) + sides[i];
+        yield `${sides[i + 1]}b${sides[i]}`;
+    }
+    yield lastSide;
+    yield `${lastSide}b${sides[0]}`;
+    yield lastSide + sides[0] + lastSide;
+    yield `${sides[0]}${lastSide}b${lastSide}`;
+    yield sides[0] + lastSide;
+    yield `${sides[0]}${lastSide}b${sides[0]}`;
+    yield sides[0].repeat(2) + lastSide;
+    yield `${sides[0]}b${lastSide}`;
+}
+// function* getAbbreviation() {       // try another solutions
+//     const sides = ['N','E','S','W'];
+//     const directionNums = sides.length;
+//     const innerDirectionNums = 8;
+//     var first = [], half = [], last = [];
+//     for(let i = 0; i < directionNums; i++) {
+//         if(sides[i] % 2) { // point of compass is N or W
+//             first    
+//         }      
+//     }
+// }
+
+function createCompassPoints() {    
+    const step = 11.25;   
+    var azimuth = 0;        
+    var arr = new Array(32).fill(0);
+    var abbr = getAbbreviation();
+    return arr.map((v, i) => {
+        azimuth += (i === 0) ? 0 : step;      
+        return {
+            abbreviation: abbr.next().value,
+            azimuth: azimuth
+        }
+    });
+    
 }
 
 
